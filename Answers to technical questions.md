@@ -34,7 +34,7 @@ requirements:
 - access to cloud metrics (assuming we are using cloud)
 
 process:
-- ask how does the reporting person knows that there is a performance problem - evidence (unless it is automatic perf. alert, which makes it easier)
+- ask how does the reporting person know that there is a performance problem - evidence (unless it is automatic perf. alert, which makes it easier)
 - quick check for global error count in logging system (or metrics), if anything stands out
 - see if there are noticable physical problems on cloud level (cpu, memory, free space issues, resource usage limits, throttling, request count, drop in response time); if there are, are they new or old? were there any restarts, scale ups or scale outs recently
 - were there deployments recently
@@ -53,7 +53,7 @@ process:
 
 It looked easy until I understood that cryto-currency code (BTC) is not globally unique - there also could be naming collisions and child entities (like tokens). Also coinmarketcap does not support multiple fiat currencies for FREE plans which you are not aware of when you work with test api.
 
-There are also some conflicting requirements: to make the solution run in one step there api-key for coinmarketcap must be somehow known, which means it has to be committed to git which is number-1 bad practice nowadays.
+There are also some conflicting requirements: to make the solution run in one step then api-key for coinmarketcap must be somehow known, which means it has to be committed to git, which is number-1 bad practice nowadays.
 
 6. **Please, describe yourself using JSON.**
 
