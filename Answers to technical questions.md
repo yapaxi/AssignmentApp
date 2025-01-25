@@ -13,7 +13,7 @@ more time?**
 
 2. **What was the most useful feature that was added to the latest version of your language of choice?**
 
-Primary Constructors on classes
+*Primary Constructors on classes*
 
 Finally there is a way to get rid of boilerplate code in constructors. Since null checks are now mostly compiler's problem there is no need to assign arguments to private fields explicitly.
 
@@ -24,7 +24,12 @@ public class SomeService(IDependency dependency)
 }
 ```
 
+
 An unexpected effect: to use this way people have to drop old-school naming convention where private fields are prefixed with underscores, which I think is a right thing to do: m_ is long gone, _ also should disappear
+
+*Utf8JsonReader*
+
+System.Text.Json namespace is as awesome as it is weird. In theory it is great that you can convert binary data to objects without intermediate "string" step, but, at the same time, you need those strings for logging; so, to fully utilize power of System.Text.Json logging api should support utf8-strings, otherwise instead of saving resources you waste resources and increase complexity.
  
 3. **How would you track down a performance issue in production? Have you ever had to do this?**
 
