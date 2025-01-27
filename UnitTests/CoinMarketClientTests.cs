@@ -38,7 +38,13 @@ namespace UnitTests
                 freeVersion: true
             );
 
-            var r = await client.GetQuotes(["BTC", "ETH"], ["USD", "EUR"], includeTokens: false, default);
+            var r = await client.GetQuotes(
+                new CoinMarketAuth("a",new Uri("https://test.test")),
+                ["BTC", "ETH"], 
+                ["USD", "EUR"],
+                includeTokens: false,
+                default
+            );
 
             Assert.IsNotNull(r.Some);
             Assert.IsNull(r.Err);
