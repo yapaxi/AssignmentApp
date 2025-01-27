@@ -6,12 +6,18 @@ namespace AssignmentApp.Code.Clients.CoinMarketCap;
 public interface ICoinMarketClient
 {
     Task<ApiResult<CryptoExchangeRates>> GetQuotes(
+        CoinMarketAuth auth,
         IReadOnlyList<string> cryptoCurrencySymbols,
         IReadOnlyList<string> fiatCurrencySymbols,
         bool includeTokens, 
         CancellationToken cancellationToken
     );
 }
+
+public record CoinMarketAuth(string ApiKey, Uri Url);
+
+public record ApiResult<TSome>(TSome? Some, CoinMarketCapError? Err)
+    : Either<TSome, CoinMarketCapError>(Some, Err);
 
 public record CryptoExchangeRates(
     [property: JsonPropertyName("data")] IReadOnlyDictionary<string, IReadOnlyList<CryptoCurrency>> Data

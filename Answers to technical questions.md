@@ -5,7 +5,7 @@
 2. **What would you add to your solution if you had
 more time?**
 
-
+- to fulfill "run in one go" requirement I had to put coint-market api-key into headers in swagger (configuration apporach will violate the requirement), any other way will make it unsecure (committing api keys to git); so, more time needed to understand the rational behind the requirement
 - ApiKey (not just swagger stab);
 - more logging;
 - error handling in middleware;
@@ -52,7 +52,6 @@ process:
 4. **What was the latest technical book you have read or tech conference you have been to? What did you learn?**
 - linux kernel programming
 - mostly was looking for differences between windows and linux internals: the most important I think is that linux does not have strict hierarchy of interrupt levels
-- must say that quality of literature (writing mostly) in Windows world is much higher
 
 5. **What do you think about this technical assessment?**
 
@@ -121,3 +120,4 @@ There are also some conflicting requirements: to make the solution run in one st
 	]
 }
 ```
+it 

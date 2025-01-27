@@ -5,9 +5,6 @@ using System.Text.Json.Serialization;
 
 namespace AssignmentApp.Code.Clients.CoinMarketCap;
 
-public record ApiResult<TSome>(TSome? Some, CoinMarketCapError? Err)
-    : Either<TSome, CoinMarketCapError>(Some, Err);
-
 public class CoinMarketClient(
     HttpClient httpClient,
     ILogger<CoinMarketClient> logger,
@@ -18,6 +15,7 @@ public class CoinMarketClient(
     public static readonly string HTTP_CLIENT_NAME = Guid.NewGuid().ToString();
 
     public async Task<ApiResult<CryptoExchangeRates>> GetQuotes(
+        CoinMarketAuth auth,
         IReadOnlyList<string> cryptoCurrencySymbols,
         IReadOnlyList<string> fiatCurrencySymbols,
         bool includeTokens, 
@@ -63,7 +61,10 @@ public class CoinMarketClient(
         {
             HttpContent content;
             switch (await httpClient.SendAsync(
-                new HttpRequestMessage(HttpMethod.Get, $"/v2/cryptocurrency/quotes/latest?symbol={cryptoParam}&convert={fiatParam}"),
+                new HttpRequestMessage(HttpMethod.Get, $"{auth.Url}v2/cryptocurrency/quotes/latest?symbol={cryptoParam}&convert={fiatParam}")
+                {
+                    Headers = { { "X-CMC_PRO_API_KEY", auth.ApiKey } }
+                },
                 cancellationToken
             ))
             {

@@ -16,11 +16,23 @@ public class ExchangeRateController(
     [HttpGet]
     [Route("api/1.0/crypto/exchange-rates")]
     public async Task<IActionResult> Get(
+        [FromHeader(Name = "X-CMC_PRO_API_KEY")] string apiKey,
         [FromQuery] IReadOnlyList<string> cryptoCurrencySymbols,
         [FromQuery] IReadOnlyList<string>? fiatCurrencySymbols = null,
-        [FromQuery] bool includeTokens = false
+        [FromQuery] bool includeTokens = false,
+        [FromHeader(Name = "X-CMC_PRO_API_URL")] string apiUrlStr = "https://pro-api.coinmarketcap.com"
     )
     {
+        if (!Uri.TryCreate(apiUrlStr, UriKind.Absolute, out var apiUrl))
+        {
+            return BadRequest(new { message = $"invalid url" });
+        }
+
+        if (string.IsNullOrWhiteSpace(apiKey))
+        {
+            return BadRequest(new { message = $"invalid or missing apiKey" });
+        }
+
         cryptoCurrencySymbols = cryptoCurrencySymbols?.Where(q => !string.IsNullOrWhiteSpace(q)).ToArray() ?? [];
         fiatCurrencySymbols = fiatCurrencySymbols?.Where(q => !string.IsNullOrWhiteSpace(q)).ToArray() ?? [];
 
@@ -37,6 +49,7 @@ public class ExchangeRateController(
         try
         {
             var r = await coinMarketClient.GetQuotes(
+                new CoinMarketAuth(apiKey, apiUrl),
                 cryptoCurrencySymbols, 
                 fiatCurrencySymbols, 
                 includeTokens, 

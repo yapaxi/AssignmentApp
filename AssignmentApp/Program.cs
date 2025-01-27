@@ -109,13 +109,9 @@ string REQUIRE(string key)
 
 void AddCointMarket()
 {
-    var coinmarketcapBaseUrl = REQUIRE("CoinmarketcapBaseUrl");
-    var coinmarketcapApiKey = REQUIRE("CoinmarketcapApiKey");
-
     builder.Services.AddHttpClient(CoinMarketClient.HTTP_CLIENT_NAME, q =>
     {
-        q.BaseAddress = new Uri(coinmarketcapBaseUrl);
-        q.DefaultRequestHeaders.Add("X-CMC_PRO_API_KEY", coinmarketcapApiKey);
+        
     });
 
     builder.Services.AddScoped(q => new CoinMarketClient(
